@@ -20,7 +20,7 @@
         </tr>
         <c:forEach var="semester" items="${listSemesterName}">
             <tr>
-                <td>${semester.toString()}</td>
+             <td><a style="color: inherit;" href="SelectSemester?name=${semester.toString()}">${semester.toString()}</a></td>
             </tr>
         </c:forEach>
     </table>
