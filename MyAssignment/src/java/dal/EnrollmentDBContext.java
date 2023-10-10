@@ -83,12 +83,12 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
 
         ArrayList<String> listSemesterName = new ArrayList<>();
         try {
-            String sql = "SELECT DISTINCT enrollment_semester_name FROM Enrollment WHERE student_id = 'HE172581' ORDER BY enrollment_semester_name";
+            String sql = "SELECT DISTINCT enrollment_semester_name FROM Enrollment WHERE student_id = ? ORDER BY enrollment_semester_name";
             PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, s.getId());
+            stm.setString(1, s.getId());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                listSemesterName.add(rs.getString(1));
+                listSemesterName.add(rs.getString("enrollment_semester_name"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);

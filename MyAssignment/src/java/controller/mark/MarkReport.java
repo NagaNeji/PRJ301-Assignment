@@ -43,7 +43,6 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         EnrollmentDBContext eDB = new EnrollmentDBContext();
         ArrayList<String> listSemesterName = eDB.getListSemesterNameByStudent(sDB.getById(a.getStudentid()));
         request.setAttribute("listSemesterName", listSemesterName);
-//        response.getWriter().println(LoggedUser.getDisplayname());
         request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
     }
 

@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
                 resp.addCookie(c_user);
                 resp.addCookie(c_pass);
             }
-            resp.getWriter().println("Hello " + loggedUser.getDisplayname());
+            resp.sendRedirect("MarkReport");
         }
 
     }
