@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <table border="1">
+    <table border="0">
         <tr>
             <th>Semester</th>
         </tr>
