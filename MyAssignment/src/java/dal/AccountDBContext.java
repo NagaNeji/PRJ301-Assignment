@@ -42,7 +42,7 @@ public class AccountDBContext extends DBContext<Account> {
     public Account get(Account entity) {
 
         try {
-            String sql = "SELECT username,displayname FROM Account\n"
+            String sql = "SELECT username,displayname,student_id FROM Account\n"
                     + "WHERE username = ? AND [password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, entity.getUsername());
@@ -52,6 +52,7 @@ public class AccountDBContext extends DBContext<Account> {
                 Account account = new Account();
                 account.setUsername(rs.getString("username"));
                 account.setDisplayname(rs.getString("displayname"));
+                account.setStudentid(rs.getString("student_id"));
                 return account;
             }
 
@@ -65,6 +66,11 @@ public class AccountDBContext extends DBContext<Account> {
             }
         }
         return null;
+    }
+
+    @Override
+    public Account getById(String Id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

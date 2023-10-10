@@ -22,7 +22,7 @@ public abstract class DBContext<T extends BaseEntity> {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://DESKTOP-VIO3U0P\\SQLEXPRESS:1433;databaseName=PRJ301";
+            String url = "jdbc:sqlserver://DESKTOP-VIO3U0P\\SQLEXPRESS:1433;databaseName=MyAssignmentDB";
             String user = "thanbd";
             String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -44,4 +44,6 @@ public abstract class DBContext<T extends BaseEntity> {
     public abstract void delete(T entity);
 
     public abstract T get(T entity);
+    
+    public abstract T getById(String Id);
 }

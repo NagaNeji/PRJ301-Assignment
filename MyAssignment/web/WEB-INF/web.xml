@@ -4,10 +4,37 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.authentication.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.authentication.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controller.authentication.Home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarkReport</servlet-name>
+        <servlet-class>controller.mark.MarkReport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarkReport</servlet-name>
+        <url-pattern>/MarkReport</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>login</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30
