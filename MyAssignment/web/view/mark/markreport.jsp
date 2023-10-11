@@ -8,21 +8,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Mark Report</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mark Report</title>
+    </head>
+    <body>
 
-    <table border="0">
-        <tr>
-            <th>Semester</th>
-        </tr>
-        <c:forEach var="semester" items="${listSemesterName}">
+        <table border="0">
             <tr>
-             <td><a style="color: inherit;" href="SelectSemester?name=${semester.toString()}">${semester.toString()}</a></td>
+                <th>Semester</th>   
             </tr>
-        </c:forEach>
-    </table>
-</body>
+            <c:forEach var="semester" items="${listSemesterName}">
+                <tr>
+                    <td>
+                        <form action="MarkReport" method="POST">
+                            <input type="hidden" name="semester" value="${semester}" />
+                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${semester}</a>
+                        </form>
+                    </td>
+
+                </tr>
+            </c:forEach>
+
+        </table>
+        <table border="0">
+            <tr>
+                <th>Course</th>
+            </tr>
+            <c:forEach var="course" items="${listCourseWithNameSemesterClicked}">
+                <tr>
+                    <td>
+                        <form action="MarkReport" method="POST">
+                            <input type="hidden" name="course" value="${course}" />
+                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${course.getName()}
+                            </a>
+                        </form>
+                    </td>
+
+                </tr>
+            </c:forEach>
+        </table>
+
+    </body>
 </html>

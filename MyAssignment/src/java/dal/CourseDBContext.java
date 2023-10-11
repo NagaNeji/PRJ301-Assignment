@@ -5,6 +5,7 @@
 package dal;
 
 import entity.Course;
+import entity.Enrollment;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,6 +97,35 @@ public class CourseDBContext extends DBContext<Course> {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Course> getListEnrollmentBySemesterName(String semesterName) {
+
+        CourseDBContext cDB = new CourseDBContext();
+        StudentDBContext sDB = new StudentDBContext();
+        ArrayList<Course> listOfEnrollment = new ArrayList<>();
+        try {
+
+            String sql = "SELECT c.course_id, c.course_name\n"
+                    + "FROM Course c\n"
+                    + "INNER JOIN Enrollment e ON c.course_id = e.course_id\n"
+                    + "WHERE e.enrollment_semester_name = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, semesterName);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getString("course_id"));
+                c.setName(rs.getString("course_name"));
+                listOfEnrollment.add(c);
+
+            }
+            return listOfEnrollment;
+        } catch (SQLException ex) {
+            Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

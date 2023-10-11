@@ -5,9 +5,12 @@
 package controller.mark;
 
 import controller.authentication.BasedRequiredAuthenticationController;
+import dal.CourseDBContext;
 import dal.EnrollmentDBContext;
 import dal.StudentDBContext;
 import entity.Account;
+import entity.Course;
+import entity.Enrollment;
 import entity.Student;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -36,6 +39,7 @@ public class MarkReport extends BasedRequiredAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CourseDBContext cDB = new CourseDBContext();
         StudentDBContext sDB = new StudentDBContext();
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
@@ -43,6 +47,9 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         EnrollmentDBContext eDB = new EnrollmentDBContext();
         ArrayList<String> listSemesterName = eDB.getListSemesterNameByStudent(sDB.getById(a.getStudentid()));
         request.setAttribute("listSemesterName", listSemesterName);
+        String nameSemesterClicked = request.getParameter("semester");
+        ArrayList<Course> listCourseWithNameSemesterClicked = cDB.getListEnrollmentBySemesterName(nameSemesterClicked);
+        request.setAttribute("listCourseWithNameSemesterClicked", listCourseWithNameSemesterClicked);
         request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
     }
 
