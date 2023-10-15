@@ -88,36 +88,33 @@ public class GradeDBContext extends DBContext<Grade> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Grade> getListGradeBySemesterNameAndCourseID(String semesterName, Course course) {
-        ArrayList<Grade> listOfGrade = new ArrayList<>();
+    public Grade getGradeBySemesterNameAndCourseID(String semesterName, String courseId) {
         try {
-
+            Grade g = new Grade();
             String sql = "SELECT g.grade_id, g.enrollment_id, g.grade_PT1, g.grade_PT2, g.grade_asignment, g.grade_lab1, g.grade_lab2, g.grade_lab3, g.grade_lab4, g.grade_lab5, g.grade_PE, g.grade_FE\n"
                     + "FROM Grade g\n"
                     + "INNER JOIN Enrollment e ON g.enrollment_id = e.enrollment_id\n"
                     + "WHERE e.enrollment_semester_name = ? AND e.course_id = ?;";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, semesterName);
-            stm.setString(2, course.getId());
+            stm.setString(2, courseId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Grade g = new Grade();
-                g.setGid(0);
-                g.setEid(0);
-                g.setPT1(0);
-                g.setPT2(0);
-                g.setAssignment(0);
-                g.setLab1(0);
-                g.setLab2(0);
-                g.setLab3(0);
-                g.setLab4(0);
-                g.setLab5(0);
-                g.setPE(0);
-                g.setFE(0);
-                listOfGrade.add(g);
+                g.setGid(rs.getInt("grade_id"));
+                g.setEid(rs.getInt("enrollment_id"));
+                g.setPT1(rs.getDouble("grade_PT1"));
+                g.setPT2(rs.getDouble("grade_PT2"));
+                g.setAssignment(rs.getDouble("grade_asignment"));
+                g.setLab1(rs.getDouble("grade_lab1"));
+                g.setLab2(rs.getDouble("grade_lab2"));
+                g.setLab3(rs.getDouble("grade_lab3"));
+                g.setLab4(rs.getDouble("grade_lab4"));
+                g.setLab5(rs.getDouble("grade_lab5"));
+                g.setPE(rs.getDouble("grade_PE"));
+                g.setFE(rs.getDouble("grade_FE"));
 
             }
-
+            return g;
         } catch (SQLException ex) {
             Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }

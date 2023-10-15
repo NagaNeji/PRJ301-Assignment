@@ -7,10 +7,12 @@ package controller.mark;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.CourseDBContext;
 import dal.EnrollmentDBContext;
+import dal.GradeDBContext;
 import dal.StudentDBContext;
 import entity.Account;
 import entity.Course;
 import entity.Enrollment;
+import entity.Grade;
 import entity.Student;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -42,6 +44,7 @@ public class MarkReport extends BasedRequiredAuthenticationController {
             throws ServletException, IOException {
         CourseDBContext cDB = new CourseDBContext();
         StudentDBContext sDB = new StudentDBContext();
+        GradeDBContext gDB = new GradeDBContext();
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
         System.out.println(a);
@@ -51,23 +54,13 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         String nameSemesterClicked = request.getParameter("semester");
         ArrayList<Course> listCourseWithNameSemesterClicked = cDB.getListEnrollmentBySemesterName(nameSemesterClicked);
         request.setAttribute("listCourseWithNameSemesterClicked", listCourseWithNameSemesterClicked);
-        request.setAttribute("string", request.getParameter("course"));
+        request.setAttribute("nameSemesterClicked",nameSemesterClicked);
+        String idCourseClicked = request.getParameter("course");
+        Grade grade = gDB.getGradeBySemesterNameAndCourseID(nameSemesterClicked, idCourseClicked);
+        request.setAttribute("grade", grade);
         request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
     }
-    public void CookieNameDuplicate(HttpServletRequest request, HttpServletResponse response, String cookieName,String cookieValue){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookieName.equals(cookie.getName())) {
-                    cookieValue = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        Cookie newCookie = new Cookie(cookieName,cookieValue);
-        newCookie.setMaxAge(3600);
-        response.addCookie(newCookie);
-    }
+    
     /**
      * Returns a short description of the servlet.
      *

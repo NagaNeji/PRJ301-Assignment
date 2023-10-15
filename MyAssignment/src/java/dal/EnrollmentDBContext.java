@@ -90,7 +90,7 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
             stm.setString(1, s.getId());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                listSemesterName.add(rs.getString("enrollment_semester_name"));
+                listSemesterName.add(rs.getString("enrollment_semester_name").trim());
             }
         } catch (SQLException ex) {
             Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
