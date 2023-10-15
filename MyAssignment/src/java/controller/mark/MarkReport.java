@@ -15,6 +15,7 @@ import entity.Student;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -50,9 +51,23 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         String nameSemesterClicked = request.getParameter("semester");
         ArrayList<Course> listCourseWithNameSemesterClicked = cDB.getListEnrollmentBySemesterName(nameSemesterClicked);
         request.setAttribute("listCourseWithNameSemesterClicked", listCourseWithNameSemesterClicked);
+        request.setAttribute("string", request.getParameter("course"));
         request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
     }
-
+    public void CookieNameDuplicate(HttpServletRequest request, HttpServletResponse response, String cookieName,String cookieValue){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookieName.equals(cookie.getName())) {
+                    cookieValue = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        Cookie newCookie = new Cookie(cookieName,cookieValue);
+        newCookie.setMaxAge(3600);
+        response.addCookie(newCookie);
+    }
     /**
      * Returns a short description of the servlet.
      *

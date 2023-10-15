@@ -98,5 +98,39 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
         return listSemesterName;
     }
 
-    
+    public ArrayList<Enrollment> getListEnrollmentByStudent(Student s) {
+
+        CourseDBContext cDB = new CourseDBContext();
+        StudentDBContext sDB = new StudentDBContext();
+        ArrayList<Enrollment> listOfEnrollment = new ArrayList<>();
+        try {
+
+            String sql = "SELECT [enrollment_id]\n"
+                    + "      ,[course_id]\n"
+                    + "      ,[student_id]\n"
+                    + "      ,[enrollment_semester_name]\n"
+                    + "      ,[enrollment_semester_id]\n"
+                    + "  FROM [Enrollment] WHERE student_id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, s.getId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                try {
+                    Enrollment e = new Enrollment();
+                    e.setId(rs.getInt("enrollment_id"));
+                    e.setCourse(cDB.getById(rs.getString("course_id")));
+                    e.setStudent(sDB.getById(rs.getString("student_id")));
+                    e.setSemesterName(rs.getString("enrollment_semester_name"));
+                    e.setSemesterId(rs.getInt("enrollment_semester_id"));
+                    listOfEnrollment.add(e);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listOfEnrollment;
+    }
+
 }

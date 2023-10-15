@@ -21,9 +21,9 @@
             <c:forEach var="semester" items="${listSemesterName}">
                 <tr>
                     <td>
-                        <form action="MarkReport" method="POST">
+                        <form  method="POST">
                             <input type="hidden" name="semester" value="${semester}" />
-                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${semester}</a>
+                            <a style="color: inherit;" href="MarkReport?semester=${semester}" onclick="this.parentNode.submit(); return false;">${semester}</a>
                         </form>
                     </td>
 
@@ -38,9 +38,9 @@
             <c:forEach var="course" items="${listCourseWithNameSemesterClicked}">
                 <tr>
                     <td>
-                        <form action="MarkReport" method="POST">
+                        <form method="POST">
                             <input type="hidden" name="course" value="${course}" />
-                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${course.getName()}
+                            <a style="color: inherit;" href="MarkReport?semester=${semester}?course=${course}" onclick="this.parentNode.submit(); return false;">${course.getName()}
                             </a>
                         </form>
                     </td>
@@ -48,6 +48,6 @@
                 </tr>
             </c:forEach>
         </table>
-
+        <h1>${string}</h1>
     </body>
 </html>
