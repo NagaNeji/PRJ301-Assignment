@@ -47,7 +47,6 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         GradeDBContext gDB = new GradeDBContext();
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
-        System.out.println(a);
         EnrollmentDBContext eDB = new EnrollmentDBContext();
         ArrayList<String> listSemesterName = eDB.getListSemesterNameByStudent(sDB.getById(a.getStudentid()));
         request.setAttribute("listSemesterName", listSemesterName);
@@ -58,6 +57,7 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         String idCourseClicked = request.getParameter("course");
         Grade grade = gDB.getGradeBySemesterNameAndCourseID(nameSemesterClicked, idCourseClicked);
         request.setAttribute("grade", grade);
+        request.setAttribute("status", grade.checkStatusGrade(grade));
         request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
     }
     

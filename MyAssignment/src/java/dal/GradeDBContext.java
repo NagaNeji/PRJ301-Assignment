@@ -41,18 +41,18 @@ public class GradeDBContext extends DBContext<Grade> {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Grade g = new Grade();
-                g.setGid(0);
-                g.setEid(0);
-                g.setPT1(0);
-                g.setPT2(0);
-                g.setAssignment(0);
-                g.setLab1(0);
-                g.setLab2(0);
-                g.setLab3(0);
-                g.setLab4(0);
-                g.setLab5(0);
-                g.setPE(0);
-                g.setFE(0);
+                g.setGid(rs.getInt("grade_id"));
+                g.setEid(rs.getInt("enrollment_id"));
+                g.setPT1(getNullableDouble(rs, "grade_PT1"));
+                g.setPT2(getNullableDouble(rs, "grade_PT2"));
+                g.setAssignment(getNullableDouble(rs, "grade_asignment"));
+                g.setLab1(getNullableDouble(rs, "grade_lab1"));
+                g.setLab2(getNullableDouble(rs, "grade_lab2"));
+                g.setLab3(getNullableDouble(rs, "grade_lab3"));
+                g.setLab4(getNullableDouble(rs, "grade_lab4"));
+                g.setLab5(getNullableDouble(rs, "grade_lab5"));
+                g.setPE(getNullableDouble(rs, "grade_PE"));
+                g.setFE(getNullableDouble(rs, "grade_FE"));
                 listOfGrade.add(g);
 
             }
@@ -102,17 +102,16 @@ public class GradeDBContext extends DBContext<Grade> {
             while (rs.next()) {
                 g.setGid(rs.getInt("grade_id"));
                 g.setEid(rs.getInt("enrollment_id"));
-                g.setPT1(rs.getDouble("grade_PT1"));
-                g.setPT2(rs.getDouble("grade_PT2"));
-                g.setAssignment(rs.getDouble("grade_asignment"));
-                g.setLab1(rs.getDouble("grade_lab1"));
-                g.setLab2(rs.getDouble("grade_lab2"));
-                g.setLab3(rs.getDouble("grade_lab3"));
-                g.setLab4(rs.getDouble("grade_lab4"));
-                g.setLab5(rs.getDouble("grade_lab5"));
-                g.setPE(rs.getDouble("grade_PE"));
-                g.setFE(rs.getDouble("grade_FE"));
-
+                g.setPT1(getNullableDouble(rs, "grade_PT1"));
+                g.setPT2(getNullableDouble(rs, "grade_PT2"));
+                g.setAssignment(getNullableDouble(rs, "grade_asignment"));
+                g.setLab1(getNullableDouble(rs, "grade_lab1"));
+                g.setLab2(getNullableDouble(rs, "grade_lab2"));
+                g.setLab3(getNullableDouble(rs, "grade_lab3"));
+                g.setLab4(getNullableDouble(rs, "grade_lab4"));
+                g.setLab5(getNullableDouble(rs, "grade_lab5"));
+                g.setPE(getNullableDouble(rs, "grade_PE"));
+                g.setFE(getNullableDouble(rs, "grade_FE"));
             }
             return g;
         } catch (SQLException ex) {
@@ -120,4 +119,10 @@ public class GradeDBContext extends DBContext<Grade> {
         }
         return null;
     }
+
+    private Double getNullableDouble(ResultSet rs, String columnLabel) throws SQLException {
+        double value = rs.getDouble(columnLabel);
+        return rs.wasNull() ? null : value;
+    }
+
 }
