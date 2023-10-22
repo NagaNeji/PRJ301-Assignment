@@ -4,7 +4,7 @@
  */
 package dal;
 
-import entity.Course;
+import entity.Semester;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,27 +15,26 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-public class CourseDBContext extends DBContext<Course> {
+public class SemesterDBContext extends DBContext<Semester> {
 
     @Override
-    public Course getById(String Id) {
+    public Semester getById(String semesterId) {
         try {
-
-            String sql = "SELECT [course_id]\n"
-                    + "      ,[course_name]\n"
-                    + "  FROM [Course]\n"
-                    + "WHERE [course_id] =?";
+            String sql = "SELECT [semester_id]\n"
+                    + "      ,[semester_name]\n"
+                    + "  FROM [Semester]\n"
+                    + "  WHERE [semester_id] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, Id);
+            stm.setString(1, semesterId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Course c = new Course();
-                c.setCourseId(rs.getString("course_id"));
-                c.setCourseName(rs.getString("course_name"));
-                return c;
+                Semester s = new Semester();
+                s.setSemesterId(rs.getInt("semester_id"));
+                s.setSemesterName(rs.getString("semester_name"));
+                return s;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SemesterDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

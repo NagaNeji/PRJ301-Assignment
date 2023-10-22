@@ -12,9 +12,10 @@ public class Account extends BaseEntity {
 
     private String username;
     private String password;
-    private String displayname;
-    private String studentid;
-    
+    private String displayName;
+    private String studentId;
+    private String campusId;
+
     public String getUsername() {
         return username;
     }
@@ -31,20 +32,29 @@ public class Account extends BaseEntity {
         this.password = password;
     }
 
-    public String getDisplayname() {
-        return displayname;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getStudentid() {
-        return studentid;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
+
+    public String getCampusId() {
+        return campusId;
+    }
+
+    public void setCampusId(String campusId) {
+        this.campusId = campusId;
+    }
+    
     
 }

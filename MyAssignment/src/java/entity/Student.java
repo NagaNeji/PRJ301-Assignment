@@ -16,16 +16,10 @@ public class Student extends BaseEntity{
     private boolean gender;
     private Date dob;
     private String email;
+    private Major major;
+    private Campus campus;
 
     public Student() {
-    }
-
-    public Student(String id, String name, boolean gender, Date dob, String email) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-        this.dob = dob;
-        this.email = email;
     }
 
     public String getId() {
@@ -67,5 +61,33 @@ public class Student extends BaseEntity{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Major getMajor() {
+        return major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+
+    public Student(String id, String name, boolean gender, Date dob, String email, Major major, Campus campus) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.dob = dob;
+        this.email = email;
+        this.major = major;
+        this.campus = campus;
+    }
+
+    
     
 }

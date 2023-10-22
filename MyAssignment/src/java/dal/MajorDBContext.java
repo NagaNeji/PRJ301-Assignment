@@ -4,7 +4,7 @@
  */
 package dal;
 
-import entity.Course;
+import entity.Major;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,29 +15,29 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-public class CourseDBContext extends DBContext<Course> {
+public class MajorDBContext extends DBContext<Major> {
 
     @Override
-    public Course getById(String Id) {
-        try {
+    public Major getById(String majorId) {
 
-            String sql = "SELECT [course_id]\n"
-                    + "      ,[course_name]\n"
-                    + "  FROM [Course]\n"
-                    + "WHERE [course_id] =?";
+        try {
+            String sql = "SELECT [major_id]\n"
+                    + "      ,[major_name]\n"
+                    + "  FROM [Major]\n"
+                    + "  WHERE [major_id] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, Id);
+            stm.setString(1, majorId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Course c = new Course();
-                c.setCourseId(rs.getString("course_id"));
-                c.setCourseName(rs.getString("course_name"));
-                return c;
+                Major m = new Major();
+                m.setMajorId(rs.getString("grade_id"));
+                m.setMajorName(rs.getString("grade_name"));
+                return m;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MajorDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
 
+    }
 }

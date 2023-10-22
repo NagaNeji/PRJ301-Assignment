@@ -18,12 +18,12 @@
             <tr>
                 <th>Semester</th>   
             </tr>
-            <c:forEach var="nameSemester" items="${requestScope.listSemesterName}">
+            <c:forEach var="semester" items="${listSemester}">
                 <tr>
                     <td>
                         <form  action="MarkReport">
-                            <input type="hidden" name="semester" value="${nameSemester}" />
-                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${nameSemester}</a>
+                            <input type="hidden" name="semester" value="${semester.getSemesterName()}" />
+                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${semester.getSemesterName()}</a>
                         </form>
                     </td>
 
@@ -35,69 +35,78 @@
             <tr>
                 <th>Course</th>
             </tr>
-            <c:forEach var="courseList" items="${requestScope.listCourseWithNameSemesterClicked}">
+            <c:forEach var="enrollment" items="${listEnrollmentWithNameSemesterClicked}">
                 <tr>
                     <td>
                         <form action="MarkReport" >
                             <input type="hidden" name="semester" value="${nameSemesterClicked}" />
-                            <input type="hidden" name="course" value="${courseList.getId().trim()}" />
-                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${courseList.getName()}(${courseList.getId()})
-                            </a>
+                            <input type="hidden" name="course" value="${enrollment.getEnrollmentId()}" />
+                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${enrollment.getCourse().getCourseName()}(${enrollment.getCourse().getCourseId()})</a>
                         </form>
                     </td>
 
                 </tr>
             </c:forEach>
         </table>
-        ${requestScope.grade.getGid()}
-        <c:if test="${requestScope.grade.getGid()!=0}">
-            <table border="0" var="grade" items = "${requestScope.grade}">
+        <table summary="Report" border="1">
+            <thead>
                 <tr>
-                    <th>Tên Thuộc Tính</th>
-                    <th>Giá Trị</th>
+                    <th>Grade category</th>
+                    <th>Grade item</th>
+                    <th>Weight</th>
+                    <th>Value</th>
+                    <th>Comment</th>
                 </tr>
-                <tr>
-                    <td>PT1</td>
-                    <td>${grade.getPT1()}</td>
-                </tr>
-                <tr>
-                    <td>PT2</td>
-                    <td>${grade.getPT2()}</td>
-                </tr>
-                <tr>
-                    <td>Assignment</td>
-                    <td>${grade.getAssignment()}</td>
-                </tr>
-                <tr>
-                    <td>Lab1</td>
-                    <td>${grade.getLab1()}</td>
-                </tr>
-                <tr>
-                    <td>Lab2</td>
-                    <td>${grade.getLab2()}</td>
-                </tr>
-                <tr>
-                    <td>Lab3</td>
-                    <td>${grade.getLab3()}</td>
-                </tr>
-                <tr>
-                    <td>Lab4</td>
-                    <td>${grade.getLab4()}</td>
-                </tr>
-                <tr>
-                    <td>Lab5</td>
-                    <td>${grade.getLab5()}</td>
-                </tr>
-                <tr>
-                    <td>PE</td>
-                    <td>${grade.getPE()}</td>
-                </tr>
-                <tr>
-                    <td>FE</td>
-                    <td>${grade.getFE()}</td>
-                </tr>
-            </table>
-            <div>${requestScope.status}</div>
-        </c:if>
+            </thead>
+            <tbody>
+
+                <c:set var="currentCourseGradeGroup" value="" />
+                <c:forEach var="score" items="${listScoreByEnrollmentId}">
+                    <tr>
+                        <c:choose>
+                            <c:when test="${empty currentCourseGradeGroup}">
+                                <c:set var="currentCourseGradeGroup" value="${score.getCourseGrade().getCourseGradeGroup()}" />
+                                <td>${score.getCourseGrade().getCourseGradeGroup()}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${not empty currentCourseGradeGroup && currentCourseGradeGroup != score.getCourseGrade().getCourseGradeGroup()}">
+                                        <td>${score.getCourseGrade().getCourseGradeGroup()}</td>
+                                        <c:set var="currentCourseGradeGroup" value="${score.getCourseGrade().getCourseGradeGroup()}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td></td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+                        <td>${score.getCourseGrade().getGrade().getGradeName()}</td>
+                        <td>${score.getCourseGrade().getCourseGradeWeight()*100}%</td>
+                        <td>${score.getScore()}</td>
+                        <td></td>
+                    </tr>
+                    <c:set var="currentCourseGradeGroup" value="${score.getCourseGrade().getCourseGradeGroup()}" />
+                </c:forEach>
+                <!--                <tr>
+                                    <td rowspan="2">Final exam</td>
+                                    <td>Final exam</td>
+                                    <td>10.0 %</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>-->
+
+            </tbody>
+            <tfoot>
+                <!--                <tr>
+                                    <td rowspan="2">Course total</td>
+                                    <td>Average</td>
+                                    <td colspan="3">7.9</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td colspan="3"><font color="Green">Passed</font></td>
+                                </tr>-->
+            </tfoot>
+        </table>   
     </body>
 </html>

@@ -4,35 +4,58 @@
  */
 package entity;
 
+import java.sql.Date;
+
 /**
  *
  * @author PC
  */
 public class Enrollment extends BaseEntity {
 
-    private int id;
-    private Course course;
+    private String enrollmentId;
     private Student student;
-    private String semesterName;
-    private int semesterId;
+    private Semester semester;
+    private Course course;
+    private Date enrollmentStartDate;
+    private Date enrollmentEndDate;
+    private Group group;
 
     public Enrollment() {
     }
 
-    public Enrollment(int id, Course course, Student student, String semesterName, int semesterId) {
-        this.id = id;
-        this.course = course;
+    public Enrollment(String enrollmentId, Student student, Semester semester, Course course, Date enrollmentStartDate, Date enrollmentEndDate, Group group) {
+        this.enrollmentId = enrollmentId;
         this.student = student;
-        this.semesterName = semesterName;
-        this.semesterId = semesterId;
+        this.semester = semester;
+        this.course = course;
+        this.enrollmentStartDate = enrollmentStartDate;
+        this.enrollmentEndDate = enrollmentEndDate;
+        this.group = group;
     }
 
-    public int getId() {
-        return id;
+    public String getEnrollmentId() {
+        return enrollmentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEnrollmentId(String enrollmentId) {
+        this.enrollmentId = enrollmentId;
+    }
+
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     public Course getCourse() {
@@ -43,28 +66,28 @@ public class Enrollment extends BaseEntity {
         this.course = course;
     }
 
-    public Student getStudent() {
-        return student;
+    public Date getEnrollmentStartDate() {
+        return enrollmentStartDate;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setEnrollmentStartDate(Date enrollmentStartDate) {
+        this.enrollmentStartDate = enrollmentStartDate;
     }
 
-    public String getSemesterName() {
-        return semesterName;
+    public Date getEnrollmentEndDate() {
+        return enrollmentEndDate;
     }
 
-    public void setSemesterName(String semesterName) {
-        this.semesterName = semesterName;
+    public void setEnrollmentEndDate(Date enrollmentEndDate) {
+        this.enrollmentEndDate = enrollmentEndDate;
     }
 
-    public int getSemesterId() {
-        return semesterId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
 }

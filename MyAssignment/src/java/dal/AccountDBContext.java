@@ -18,31 +18,15 @@ import java.util.logging.Logger;
  */
 public class AccountDBContext extends DBContext<Account> {
 
-    @Override
-    public ArrayList<Account> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void insert(Account entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Account entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Account entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public Account get(Account entity) {
 
         try {
-            String sql = "SELECT username,displayname,student_id FROM Account\n"
+            String sql = "SELECT [username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[displayname]\n"
+                    + "      ,[student_id]\n"
+                    + "      ,[campus_id]\n"
+                    + "  FROM [Account]\n"
                     + "WHERE username = ? AND [password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, entity.getUsername());
@@ -51,8 +35,9 @@ public class AccountDBContext extends DBContext<Account> {
             if (rs.next()) {
                 Account account = new Account();
                 account.setUsername(rs.getString("username"));
-                account.setDisplayname(rs.getString("displayname"));
-                account.setStudentid(rs.getString("student_id"));
+                account.setDisplayName(rs.getString("displayname"));
+                account.setStudentId(rs.getString("student_id"));
+                account.setCampusId(rs.getString("campus_id"));
                 return account;
             }
 

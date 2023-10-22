@@ -4,7 +4,7 @@
  */
 package dal;
 
-import entity.Grade;
+import entity.Group;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,28 +13,28 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ADMIN
+ * @author PC
  */
-public class GradeDBContext extends DBContext<Grade> {
+public class GroupDBContext extends DBContext<Group> {
 
     @Override
-    public Grade getById(String gradeId) {
+    public Group getById(String groupId) {
         try {
-            String sql = "SELECT [grade_id]\n"
-                    + "      ,[grade_name]\n"
-                    + "  FROM [Grade]\n"
-                    + "  WHERE [grade_id] = ?";
+            String sql = "SELECT [group_id]\n"
+                    + "      ,[group_name]\n"
+                    + "  FROM [Group]\n"
+                    + "  WHERE [group_id] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, gradeId);
+            stm.setString(1, groupId);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
-                Grade g = new Grade();
-                g.setGradeId(rs.getString("grade_id"));
-                g.setGradeName(rs.getString("grade_name"));
+            if (rs.next()){
+                Group g = new Group();
+                g.setGroupId(rs.getString("group_id"));
+                g.setGroupName(rs.getString("group_name"));
                 return g;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
