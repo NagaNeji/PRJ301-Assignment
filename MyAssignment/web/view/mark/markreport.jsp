@@ -41,7 +41,7 @@
                         <form action="MarkReport" >
                             <input type="hidden" name="semester" value="${nameSemesterClicked}" />
                             <input type="hidden" name="course" value="${courseList.getId().trim()}" />
-                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${courseList.getName()}
+                            <a style="color: inherit;" href="#" onclick="this.parentNode.submit(); return false;">${courseList.getName()}(${courseList.getId()})
                             </a>
                         </form>
                     </td>
