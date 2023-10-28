@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author PC
@@ -56,5 +58,7 @@ public class Score extends BaseEntity {
     public void setScore(Double score) {
         this.score = score;
     }
+
+    
 
 }

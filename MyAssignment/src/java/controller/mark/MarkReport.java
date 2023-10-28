@@ -39,24 +39,27 @@ public class MarkReport extends BasedRequiredAuthenticationController {
             throws ServletException, IOException {
         ScoreDBContext scoreDB = new ScoreDBContext();
         EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
-        
+
         ArrayList<Semester> listSemester = enrollmentDB.getListSemesterByStudentId(LoggedUser.getStudentId());
         request.setAttribute("listSemester", listSemester);
-        
+
         String nameSemesterClicked = request.getParameter("semester");
+        if (nameSemesterClicked==null) {
+            nameSemesterClicked = listSemester.get(listSemester.size() - 1).getSemesterName();
+        }
         ArrayList<Enrollment> listEnrollmentWithNameSemesterClicked = enrollmentDB.getListEnrollmentBySemesterName(nameSemesterClicked);
         request.setAttribute("listEnrollmentWithNameSemesterClicked", listEnrollmentWithNameSemesterClicked);
-        
+
         request.setAttribute("nameSemesterClicked", nameSemesterClicked);
-        
+
         String idEnrollmentClicked = request.getParameter("course");
         ArrayList<Score> listScoreByEnrollmentId = scoreDB.getListScoreByEnrollmentId(idEnrollmentClicked);
-//        if(listScoreByEnrollmentId.isEmpty()){
-//            request.setAttribute("listScoreByEnrollmentId","null");
-//        }else{
-            request.setAttribute("listScoreByEnrollmentId", listScoreByEnrollmentId);
-//        }
-        request.getRequestDispatcher("view/mark/markreport.jsp").forward(request, response);
+        request.setAttribute("idEnrollmentClicked", idEnrollmentClicked);
+        request.setAttribute("listScoreByEnrollmentId", listScoreByEnrollmentId);
+
+        request.setAttribute("average", scoreDB.getAverage(listScoreByEnrollmentId));
+        request.setAttribute("status", scoreDB.getStatus(listScoreByEnrollmentId));
+        request.getRequestDispatcher("view/markreport.jsp").forward(request, response);
     }
 
     /**

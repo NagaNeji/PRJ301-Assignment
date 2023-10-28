@@ -73,4 +73,88 @@ public class ScoreDBContext extends DBContext<Score> {
         }
         return null;
     }
+
+    public double getAverage(ArrayList<Score> listScore) {
+        double average = 0;
+        boolean checkFER = false;
+        for (Score score : listScore) {
+            if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && !"Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())) {
+                if (score.getScore() == null) {
+                    return 0;
+                } else if (!"Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())) {
+                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
+                }
+            }
+            if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && "Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && score.getScore() != null) {
+                checkFER = true;
+            }
+        }
+        for (Score score : listScore) {
+            if (checkFER) {
+                if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                        && "Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())) {
+                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
+                }
+            } else if (!checkFER) {
+                if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                        && "Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())) {
+                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
+                }
+            }
+        }
+        return average;
+    }
+
+    public String getStatus(ArrayList<Score> listScore) {
+        for (Score score : listScore) {
+            if ("Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && !"Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && score.getScore() == null) {
+                return "STUDYING";
+            }
+        }
+        for (Score score : listScore) {
+            if ("Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && !"Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && !"Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && (score.getScore() == 0)) {
+                return "NOT PASSED";
+            }
+        }
+        for (Score score : listScore) {
+            if ("Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && "Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && getFER(listScore) == null && score.getScore() < 4) {
+                return "NOT PASSED";
+            }
+        }
+        for (Score score : listScore) {
+            if ("Total".equals(score.getCourseGrade().getGrade().getGradeName())
+                    && "Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())
+                    && (score.getScore() != null)) {
+                if (score.getScore() < 4) {
+                    return "NOT PASSED";
+                }
+            }
+        }
+        if (getAverage(listScore) < 5) {
+            return "NOT PASSED";
+        } else {
+            return "PASSED";
+        }
+
+    }
+
+    public Double getFER(ArrayList<Score> listScore) {
+        for (Score score : listScore) {
+            if ("Final Exam Resit".equals(score.getCourseGrade().getGrade().getGradeName())) {
+                return score.getScore();
+            }
+        }
+        return null;
+    }
+
 }

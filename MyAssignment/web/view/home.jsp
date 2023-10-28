@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form method="post" action="MarkReport">
+            <button type="submit" name="action" value="markReport">Mark Report</button>
+        </form>
+        <button type="submit" name="action" value="academicTranscript">Academic Transcript</button>
+
+
     </body>
 </html>

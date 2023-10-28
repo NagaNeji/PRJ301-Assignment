@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        req.getRequestDispatcher("view/authentication/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/login.jsp").forward(req, resp);
 
     }
 
@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
                 resp.addCookie(c_user);
                 resp.addCookie(c_pass);
             }
-            resp.sendRedirect("MarkReport");
+            resp.sendRedirect("home");
         }
 
     }
