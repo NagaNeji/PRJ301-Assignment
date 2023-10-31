@@ -78,7 +78,6 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
 
     public ArrayList<Enrollment> getListEnrollmentBySemesterName(String semesterName) {
         EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
-        SemesterDBContext semesterDB = new SemesterDBContext();
         ArrayList<Enrollment> listEnrollment = new ArrayList<>();
         try {
             String sql = "SELECT s.semester_name, e.enrollment_id\n"
@@ -89,8 +88,7 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
             stm.setString(1, semesterName);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Enrollment e = new Enrollment();
-                e = enrollmentDB.getById(rs.getString("enrollment_id"));
+                Enrollment e = enrollmentDB.getById(rs.getString("enrollment_id"));
                 listEnrollment.add(e);
             }
             return listEnrollment;
@@ -100,4 +98,22 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
         return listEnrollment;
     }
 
+    public Enrollment getLastestEnrollmentByCourse(String courseId) {
+        EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
+        try {
+            String sql = "SELECT MAX([enrollment_id])AS enrollment_id\n"
+                    + "FROM [Enrollment]\n"
+                    + "WHERE [course_id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Enrollment e = enrollmentDB.getById(rs.getString("enrollment_id"));
+                return e;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EnrollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

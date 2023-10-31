@@ -30,8 +30,8 @@ public class MajorDBContext extends DBContext<Major> {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Major m = new Major();
-                m.setMajorId(rs.getString("grade_id"));
-                m.setMajorName(rs.getString("grade_name"));
+                m.setMajorId(rs.getString("major_id"));
+                m.setMajorName(rs.getString("major_name"));
                 return m;
             }
         } catch (SQLException ex) {

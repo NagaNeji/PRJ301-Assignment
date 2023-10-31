@@ -15,8 +15,9 @@
         <form method="post" action="MarkReport">
             <button type="submit" name="action" value="markReport">Mark Report</button>
         </form>
+        <form method="post" action="GradeTranscript">
         <button type="submit" name="action" value="academicTranscript">Academic Transcript</button>
-
+        </form>
 
     </body>
 </html>
