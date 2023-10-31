@@ -11,8 +11,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <form method="POST" action="home">
+            <button>Home</button>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -36,7 +40,7 @@
                         <th>${gradeReportRow.getMajorCourse().getCourse().getCourseName()}</th>
                         <th>${gradeReportRow.getMajorCourse().getCredit()}</th>
                         <th>${gradeReportRow.getGrade()}</th>
-                        <th>${gradeReportRow.getStatus()}</th>
+                        <th data-status="${gradeReportRow.getStatus()}">${gradeReportRow.getStatus()}</th>
                     </tr>
                 </c:forEach>
             </tbody>

@@ -11,9 +11,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Mark Report</title>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body style="background-color: white">
-
+        <form method="POST" action="home">
+            <button>Home</button>
+        </form>
 
         <table>
             <tbody>
@@ -163,7 +166,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Status</td>
-                                                                    <td colspan="3">${status}</td>
+                                                                    <td colspan="3" data-status="${status}">${status}</td>
                                                                 </tr>
                                                             </tfoot>
                                                         </table>
