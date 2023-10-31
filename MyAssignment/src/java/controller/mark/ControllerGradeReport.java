@@ -60,6 +60,8 @@ public class ControllerGradeReport {
 
             if (gradeReportRow.getEnrollment().getEnrollmentId() == null) {
                 gradeReportRow.setStatus("NOT STARTED");
+                
+                gradeReportRow.getMajorCourse().setCredit(null);
             } else {
                 gradeReportRow.setStatus(scoreDB.getStatus(listScore));
             }

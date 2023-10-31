@@ -21,6 +21,7 @@
                     <th>SEMESTER</th>
                     <th>SUBJECT CODE</th>
                     <th>SUBJECT NAME</th>
+                    <th>CREDIT</th>
                     <th>GRADE</th>
                     <th>STATUS</th>
                 </tr>
@@ -33,6 +34,7 @@
                         <th>${gradeReportRow.getEnrollment().getSemester().getSemesterName()}</th>
                         <th>${gradeReportRow.getMajorCourse().getCourse().getCourseId()}</th>
                         <th>${gradeReportRow.getMajorCourse().getCourse().getCourseName()}</th>
+                        <th>${gradeReportRow.getMajorCourse().getCredit()}</th>
                         <th>${gradeReportRow.getGrade()}</th>
                         <th>${gradeReportRow.getStatus()}</th>
                     </tr>

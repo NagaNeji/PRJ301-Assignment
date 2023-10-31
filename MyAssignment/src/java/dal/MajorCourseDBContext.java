@@ -27,6 +27,7 @@ public class MajorCourseDBContext extends DBContext<MajorCourse> {
                     + "      ,[major_id]\n"
                     + "      ,[course_id]\n"
                     + "      ,[semester_number]\n"
+                    + "      ,[credit]\n"
                     + "  FROM [Major_Course]\n"
                     + "  WHERE [major_course_id] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -38,6 +39,7 @@ public class MajorCourseDBContext extends DBContext<MajorCourse> {
                 mc.setMajor(majorDB.getById(rs.getString("major_id")));
                 mc.setCourse(courseDB.getById(rs.getString("course_id")));
                 mc.setSemesterNumber(rs.getInt("semester_number"));
+                mc.setCredit(rs.getInt("credit"));
                 return mc;
             }
         } catch (SQLException ex) {
