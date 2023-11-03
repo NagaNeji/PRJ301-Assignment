@@ -71,7 +71,7 @@ public class ControllerGradeReport {
         return listGradeTranscript;
     }
 
-    public Double getAverage(ArrayList<Score> listScore) {
+    private Double getAverage(ArrayList<Score> listScore) {
         Double average = 0.0;
         boolean checkFER = false;
         for (Score score : listScore) {

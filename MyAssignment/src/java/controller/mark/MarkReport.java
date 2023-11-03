@@ -7,6 +7,7 @@ package controller.mark;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.EnrollmentDBContext;
 import dal.ScoreDBContext;
+import dal.StudentDBContext;
 import entity.Account;
 import entity.Enrollment;
 import entity.Score;
@@ -37,8 +38,11 @@ public class MarkReport extends BasedRequiredAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
+        StudentDBContext studentDB = new StudentDBContext();
         ScoreDBContext scoreDB = new ScoreDBContext();
         EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
+        
+        request.setAttribute("student", studentDB.getById(LoggedUser.getStudentId()));
 
         ArrayList<Semester> listSemester = enrollmentDB.getListSemesterByStudentId(LoggedUser.getStudentId());
         request.setAttribute("listSemester", listSemester);

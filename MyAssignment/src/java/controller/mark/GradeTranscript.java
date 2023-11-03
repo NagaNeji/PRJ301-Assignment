@@ -46,6 +46,7 @@ public class GradeTranscript extends BasedRequiredAuthenticationController {
         ArrayList<GradeReportRow> listGradeReportRow = new ArrayList<>();
         StudentDBContext db = new StudentDBContext();
         Student s = db.getById(LoggedUser.getStudentId());
+        request.setAttribute("student", s);
 
         listGradeReportRow = controller.getListGradeTranscriptRowByStudentId(LoggedUser.getStudentId());
 
@@ -72,40 +73,6 @@ public class GradeTranscript extends BasedRequiredAuthenticationController {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
-    }
-
-    public Double getAverage(ArrayList<Score> listScore) {
-        Double average = 0.0;
-        boolean checkFER = false;
-        for (Score score : listScore) {
-            if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
-                    && !"Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())) {
-                if (score.getScore() == null) {
-                    return null;
-                } else if (!"Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())) {
-                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
-                }
-            }
-            if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
-                    && "Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())
-                    && score.getScore() != null) {
-                checkFER = true;
-            }
-        }
-        for (Score score : listScore) {
-            if (checkFER) {
-                if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
-                        && "Final Exam Resit".equals(score.getCourseGrade().getCourseGradeGroup())) {
-                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
-                }
-            } else if (!checkFER) {
-                if (!"Total".equals(score.getCourseGrade().getGrade().getGradeName())
-                        && "Final Exam".equals(score.getCourseGrade().getCourseGradeGroup())) {
-                    average = average + score.getScore() * score.getCourseGrade().getCourseGradeWeight();
-                }
-            }
-        }
-        return average;
     }
 
 }

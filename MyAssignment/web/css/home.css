@@ -1,0 +1,130 @@
+.label-primary {
+    background-color: rgb(51,122,183);
+    color: white;
+    padding: 0px 7px;
+    font-size: 12px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(240,240,240);
+    border-radius: 4px;
+}
+
+.divControl {
+    padding-left: 8px;
+}
+
+.divUser {
+    padding-right: 7px;
+}
+
+.divUser a {
+    background-color: rgb(92,184,92);
+    border-radius: 5px;
+    padding: 0 7px 2px 7px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.divUser a:hover {
+    color: #fff;
+}
+
+.divUser b {
+    background-color: rgb(92,184,92);
+    border-radius: 5px;
+    padding: 0 7px 2px 7px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.label-studentRoll {
+    background-color: rgb(110,110,110);
+    border-radius: 7px;
+    color: #fff;
+    font-size: 20px;
+    padding: 7px 15px;
+    font-weight: bold;
+}
+
+.label-studentMajor {
+    background-color: rgb(91,192,222);
+    border-radius: 7px;
+    color: #fff;
+    font-size: 20px;
+    padding: 7px 15px;
+    font-weight: bold;
+}
+
+.thead-inverse {
+    background-color: rgb(107,144,218);
+    text-transform: uppercase;
+    color: #333;
+    padding: 0px;
+}
+
+.thead-inverse th {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.table th {
+    padding: 0.35rem;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.table td {
+    font-size: 0.92rem;
+}
+
+.label2 {
+    background-color: rgb(107,144,218);
+    color: white;
+    padding: 1px 7px 2px 7px;
+    font-size: 24px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+span[data-status="PASSED"] {
+    background-color: rgb(92,184,92);
+    color: white;
+    padding: 0px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+span[data-status="STUDYING"] {
+    background-color: rgb(91,192,222);
+    color: white;
+    padding: 0px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+span[data-status="NOT STARTED"] {
+    background-color: rgb(110,110,110);
+    color: white;
+    padding: 0px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+span[data-status="NOT PASSED"] {
+    background-color: rgb(217,83,79);
+    color: white;
+    padding: 0px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+

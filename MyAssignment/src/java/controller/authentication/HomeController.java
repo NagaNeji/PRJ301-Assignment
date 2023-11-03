@@ -4,6 +4,7 @@
  */
 package controller.authentication;
 
+import dal.StudentDBContext;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,9 +30,10 @@ public class HomeController extends BasedRequiredAuthenticationController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        
+        StudentDBContext studentDB = new StudentDBContext();
+        request.setAttribute("student", studentDB.getById(LoggedUser.getStudentId()));
         request.getRequestDispatcher("view/home.jsp").forward(request, response);
     }
 
@@ -47,7 +49,7 @@ public class HomeController extends BasedRequiredAuthenticationController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, LoggedUser);
     }
 
     /**
@@ -61,7 +63,7 @@ public class HomeController extends BasedRequiredAuthenticationController {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, LoggedUser);
     }
 
     /**
