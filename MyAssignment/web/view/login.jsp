@@ -4,6 +4,7 @@
     Author     : PC
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@
                 border-radius: 5px;
                 border: none;
                 box-shadow: 0 0 5px rgba(0,0,0,0.1);
-                width: 100%;
+                width: 95%;
                 margin-bottom: 20px;
             }
             input[type="submit"] {
@@ -52,16 +53,26 @@
             input[type="submit"]:hover {
                 background-color: #3e8e41;
             }
+            
         </style>
     </head>
     <body>
         <form action="login" method="POST">
-            <h1>Student Login</h1>
+            <h1>Login</h1>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <input type="submit" value="login">
+            <c:if test="${checkAuthentication eq 'F'}">
+                <div style="color: red">Sai thông tin đăng nhập</div>
+            </c:if>
+                Campus:
+            <select name="campus">
+                <c:forEach items="${list}" var="l">
+                    <option value="${l.getCampusId()}">${l.getCampusName()}</option>
+                </c:forEach>
+            </select>
+                <input style="margin-left: 154px" type="submit" value="login">
         </form>
     </body>
 </html>

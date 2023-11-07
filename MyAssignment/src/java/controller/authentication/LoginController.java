@@ -5,7 +5,9 @@
 package controller.authentication;
 
 import dal.AccountDBContext;
+import dal.CampusDBContext;
 import entity.Account;
+import entity.Campus;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,7 +34,9 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
+        CampusDBContext campusDB = new CampusDBContext();
+        ArrayList<Campus> listCampus = campusDB.getList();
+        req.setAttribute("list", listCampus);
         req.getRequestDispatcher("view/login.jsp").forward(req, resp);
 
     }
@@ -45,23 +51,29 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String campusId = req.getParameter("campus");
         Account param = new Account();
         param.setUsername(username);
         param.setPassword(password);
-
+        param.setCampusId(campusId);
         AccountDBContext db = new AccountDBContext();
         Account loggedUser = db.get(param);
 
-        if (loggedUser == null) {
-            resp.getWriter().println("incorrect username or password");
+        if (loggedUser == null || (loggedUser.getCampusId() == null ? param.getCampusId() != null : !loggedUser.getCampusId().equals(param.getCampusId()))) {
+            req.setAttribute("checkAuthentication", "F");
+            CampusDBContext campusDB = new CampusDBContext();
+            ArrayList<Campus> listCampus = campusDB.getList();
+            req.setAttribute("list", listCampus);
+            req.getRequestDispatcher("view/login.jsp").forward(req, resp);
         } else {
             String remember = req.getParameter("remember");
-            
+
             HttpSession session = req.getSession();
             session.setAttribute("account", loggedUser);
-            
+
             if (remember != null) {
                 Cookie c_user = new Cookie("user", username);
                 Cookie c_pass = new Cookie("pass", password);
@@ -84,5 +96,9 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+    }
 
 }

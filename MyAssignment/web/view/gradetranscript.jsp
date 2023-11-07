@@ -115,7 +115,7 @@
                                             <td>${gradeReportRow.getMajorCourse().getCredit()}</td>
                                             <td>
                                                 <c:if test="${ not empty gradeReportRow.getGrade()}">
-                                                    <span class="label label-primary">
+                                                    <span class="label label-primary" data-status="${gradeReportRow.getStatus()}">
                                                         ${gradeReportRow.getGrade()}
                                                     </span>
                                                 </c:if>

@@ -4,6 +4,7 @@
     Author     : PC
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -205,8 +206,12 @@
                                                                                     </c:choose>
                                                                                 </c:otherwise>
                                                                             </c:choose>
-                                                                            <td style="padding-right: 10px;">${score.getCourseGrade().getGrade().getGradeName()}</td>
-                                                                            <td style="padding-right: 10px;">${score.getCourseGrade().getCourseGradeWeight()*100}%</td>
+                                                                            <td style="padding-right: 10px; width: 30%">${score.getCourseGrade().getGrade().getGradeName()}</td>
+                                                                            <td style="padding-right: 10px;">
+                                                                                <fmt:setLocale value="en_US" />
+                                                                                <fmt:formatNumber value="${score.getCourseGrade().getCourseGradeWeight()*100}" pattern="#.#" var="scoreValue"/>
+                                                                                ${scoreValue}%
+                                                                            </td>
                                                                             <td style="padding-right: 10px;">${score.getScore()}</td>
                                                                             <td style="padding-right: 10px;"></td>
                                                                         </tr>
