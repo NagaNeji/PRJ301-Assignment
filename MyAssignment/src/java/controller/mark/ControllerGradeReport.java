@@ -40,7 +40,7 @@ public class ControllerGradeReport {
             Enrollment e = new Enrollment();
             try {
                 Enrollment lastestEnrollment;
-                lastestEnrollment = enrollmentDB.getLastestEnrollmentByCourse(mc.getCourse().getCourseId());
+                lastestEnrollment = enrollmentDB.getLastestEnrollmentByCourse(mc.getCourse().getCourseId(),s.getId());
                 if (lastestEnrollment != null) {
                     e = enrollmentDB.getById(lastestEnrollment.getEnrollmentId());
                 }

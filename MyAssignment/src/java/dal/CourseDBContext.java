@@ -20,7 +20,6 @@ public class CourseDBContext extends DBContext<Course> {
     @Override
     public Course getById(String Id) {
         try {
-
             String sql = "SELECT [course_id]\n"
                     + "      ,[course_name]\n"
                     + "  FROM [Course]\n"

@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,7 +51,7 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-bottom: 63px">
                     <form name="jspForm" method="post" action="./transcript.jsp" id="jspForm">                        
                         <div class="content-container">
                             <div class="divControl">
@@ -116,7 +117,9 @@
                                             <td>
                                                 <c:if test="${ not empty gradeReportRow.getGrade()}">
                                                     <span class="label label-primary" data-status="${gradeReportRow.getStatus()}">
-                                                        ${gradeReportRow.getGrade()}
+                                                        <fmt:setLocale value="en_US" />
+                                                        <fmt:formatNumber value="${gradeReportRow.getGrade()}" pattern="#.#" var="scoreValue"/>
+                                                        ${scoreValue}
                                                     </span>
                                                 </c:if>
                                             </td>
@@ -137,37 +140,33 @@
                             </tr>
 
 
-                            <table>
-                                <tr>
-                                    <td valign="top">
-                                        <div>
-                                            <table width="100%" border="0">
-                                                <tr>
-                                                    <td>
-                                                        <b>Mọi góp ý, thắc mắc xin liên hệ:</b>
-                                                        <span>Phòng dịch vụ sinh viên</span>: Email:
-                                                        <a href="mailto:dichvusinhvien@fe.edu.vn">dichvusinhvien@fe.edu.vn</a>.
-                                                        Điện thoại: (024)7308.13.13
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p style="text-align: center">
-                                                            © Powered by <a href="http://fpt.edu.vn" target="_blank">FPT University</a>
-                                                            &nbsp;|&nbsp;<a href="http://cms.fpt.edu.vn/" target="_blank">CMS</a>
-                                                            &nbsp;|&nbsp;<a href="http://library.fpt.edu.vn" target="_blank">library</a>
-                                                            &nbsp;|&nbsp;<a href="http://library.books24x7.com" target="_blank">books24x7</a>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+
                     </form>
                 </div>
             </div>
         </div>
+        <div>
+            <table width="100%" border="0">
+                <tr>
+                    <td style="text-align: center">
+                        <b>Mọi góp ý, thắc mắc xin liên hệ:</b>
+                        <span>Phòng dịch vụ sinh viên</span>: Email:
+                        <a href="mailto:dichvusinhvien@fe.edu.vn">dichvusinhvien@fe.edu.vn</a>.
+                        Điện thoại: (024)7308.13.13
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="text-align: center">
+                            © Powered by <a href="http://fpt.edu.vn" target="_blank">FPT University</a>
+                            &nbsp;|&nbsp;<a href="http://cms.fpt.edu.vn/" target="_blank">CMS</a>
+                            &nbsp;|&nbsp;<a href="http://library.fpt.edu.vn" target="_blank">library</a>
+                            &nbsp;|&nbsp;<a href="http://library.books24x7.com" target="_blank">books24x7</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </body>
 </html>

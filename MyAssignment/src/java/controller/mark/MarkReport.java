@@ -33,6 +33,7 @@ public class MarkReport extends BasedRequiredAuthenticationController {
      *
      * @param request servlet request
      * @param response servlet response
+     * @param LoggedUser
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -41,28 +42,34 @@ public class MarkReport extends BasedRequiredAuthenticationController {
         StudentDBContext studentDB = new StudentDBContext();
         ScoreDBContext scoreDB = new ScoreDBContext();
         EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
-        
+
         request.setAttribute("student", studentDB.getById(LoggedUser.getStudentId()));
 
         ArrayList<Semester> listSemester = enrollmentDB.getListSemesterByStudentId(LoggedUser.getStudentId());
         request.setAttribute("listSemester", listSemester);
 
-        String nameSemesterClicked = request.getParameter("semester");
-        if (nameSemesterClicked==null) {
-            nameSemesterClicked = listSemester.get(listSemester.size() - 1).getSemesterName();
+        if (!listSemester.isEmpty()) {
+            request.setAttribute("checkList", true);
+            String nameSemesterClicked = request.getParameter("semester");
+            if (nameSemesterClicked == null) {
+                nameSemesterClicked = listSemester.get(listSemester.size() - 1).getSemesterName();
+            }
+            ArrayList<Enrollment> listEnrollmentWithNameSemesterClicked = enrollmentDB.getListEnrollmentBySemesterName(nameSemesterClicked);
+            request.setAttribute("listEnrollmentWithNameSemesterClicked", listEnrollmentWithNameSemesterClicked);
+
+            request.setAttribute("nameSemesterClicked", nameSemesterClicked);
+
+            String idEnrollmentClicked = request.getParameter("course");
+            ArrayList<Score> listScoreByEnrollmentId = scoreDB.getListScoreByEnrollmentId(idEnrollmentClicked);
+            request.setAttribute("idEnrollmentClicked", idEnrollmentClicked);
+            request.setAttribute("listScoreByEnrollmentId", listScoreByEnrollmentId);
+
+            request.setAttribute("average", scoreDB.getAverage(listScoreByEnrollmentId));
+            request.setAttribute("status", scoreDB.getStatus(listScoreByEnrollmentId));
+        }else{
+            request.setAttribute("checkList", false);
         }
-        ArrayList<Enrollment> listEnrollmentWithNameSemesterClicked = enrollmentDB.getListEnrollmentBySemesterName(nameSemesterClicked);
-        request.setAttribute("listEnrollmentWithNameSemesterClicked", listEnrollmentWithNameSemesterClicked);
 
-        request.setAttribute("nameSemesterClicked", nameSemesterClicked);
-
-        String idEnrollmentClicked = request.getParameter("course");
-        ArrayList<Score> listScoreByEnrollmentId = scoreDB.getListScoreByEnrollmentId(idEnrollmentClicked);
-        request.setAttribute("idEnrollmentClicked", idEnrollmentClicked);
-        request.setAttribute("listScoreByEnrollmentId", listScoreByEnrollmentId);
-
-        request.setAttribute("average", scoreDB.getAverage(listScoreByEnrollmentId));
-        request.setAttribute("status", scoreDB.getStatus(listScoreByEnrollmentId));
         request.getRequestDispatcher("view/markreport.jsp").forward(request, response);
     }
 

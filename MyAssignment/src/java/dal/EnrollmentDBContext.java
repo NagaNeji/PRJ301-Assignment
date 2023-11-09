@@ -98,14 +98,15 @@ public class EnrollmentDBContext extends DBContext<Enrollment> {
         return listEnrollment;
     }
 
-    public Enrollment getLastestEnrollmentByCourse(String courseId) {
+    public Enrollment getLastestEnrollmentByCourse(String courseId,String studentId) {
         EnrollmentDBContext enrollmentDB = new EnrollmentDBContext();
         try {
-            String sql = "SELECT MAX([enrollment_id])AS enrollment_id\n"
-                    + "FROM [Enrollment]\n"
-                    + "WHERE [course_id] = ?";
+            String sql = "SELECT MAX([enrollment_id])AS enrollment_id\n" +
+"                   FROM [Enrollment]\n" +
+"                    WHERE [course_id] = ? AND student_id=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseId);
+            stm.setString(2, studentId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Enrollment e = enrollmentDB.getById(rs.getString("enrollment_id"));
